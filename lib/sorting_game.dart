@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shake/shake.dart';
 
 class SortingGameScreen extends StatefulWidget {
   final List<String> items;
@@ -11,11 +12,27 @@ class SortingGameScreen extends StatefulWidget {
 
 class _SortingGameScreenState extends State<SortingGameScreen> {
   late List<String> shuffledItems;
+  late ShakeDetector _shakeDetector;
 
   @override
   void initState() {
     super.initState();
     shuffledItems = List.from(widget.items)..shuffle();
+    _shakeDetector = ShakeDetector.autoStart(
+      onPhoneShake: _resetSortingGame,
+    );
+  }
+
+  @override
+  void dispose() {
+    _shakeDetector.stopListening();
+    super.dispose();
+  }
+
+  void _resetSortingGame() {
+    setState(() {
+      shuffledItems = List.from(widget.items)..shuffle();
+    });
   }
 
   void _onReorder(int oldIndex, int newIndex) {
@@ -66,7 +83,7 @@ class _SortingGameScreenState extends State<SortingGameScreen> {
                 ));
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Inténtalo de nuevo.'),
+                  content: Text('Sigue intentando.'),
                 ));
               }
             },
