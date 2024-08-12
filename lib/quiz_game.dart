@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shake/shake.dart';
 
 class QuizGameScreen extends StatefulWidget {
   final List<Map<String, String>> questions;
@@ -13,6 +14,29 @@ class _QuizGameScreenState extends State<QuizGameScreen> {
   int currentQuestionIndex = 0;
   final TextEditingController _answerController = TextEditingController();
   String feedbackMessage = '';
+  late ShakeDetector _shakeDetector;
+
+  @override
+  void initState() {
+    super.initState();
+    _shakeDetector = ShakeDetector.autoStart(
+      onPhoneShake: _resetQuiz,
+    );
+  }
+
+  @override
+  void dispose() {
+    _shakeDetector.stopListening();
+    super.dispose();
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      currentQuestionIndex = 0;
+      feedbackMessage = '';
+      _answerController.clear();
+    });
+  }
 
   void _submitAnswer() {
     setState(() {
