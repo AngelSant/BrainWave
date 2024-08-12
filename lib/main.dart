@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'login_screen.dart';
 import 'dart:async';
 
+//prueba de comit hola moy
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
