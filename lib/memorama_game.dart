@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:shake/shake.dart';
 
 class MemoramaGame extends StatefulWidget {
   final List<String> cardContents;
@@ -17,11 +18,21 @@ class _MemoramaGameState extends State<MemoramaGame> {
   late bool _isFlipping;
   late int _firstCardIndex;
   late int _secondCardIndex;
+  late ShakeDetector _shakeDetector;
 
   @override
   void initState() {
     super.initState();
     _initializeGame();
+    _shakeDetector = ShakeDetector.autoStart(
+      onPhoneShake: _resetGame,
+    );
+  }
+
+  @override
+  void dispose() {
+    _shakeDetector.stopListening();
+    super.dispose();
   }
 
   void _initializeGame() {
