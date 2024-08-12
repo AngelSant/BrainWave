@@ -1,0 +1,1 @@
+ C:\\Users\\Angel\\AndroidStudioProjects\\brain_wave\\.dart_tool\\flutter_build\\b66cd3986dc9e1323f395190781da393\\native_assets.yaml: 
